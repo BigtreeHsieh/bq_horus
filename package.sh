@@ -16,6 +16,8 @@ EXTRA_ARGS=${2}
 
 ##Which version name are we appending to the final archive
 VERSION=`head -1 pkg/linux/debian/changelog | grep -o '[0-9.]*' | head -1`
+VERSION_EXT=${VERSION_EXT:=""}
+VERSION=${VERSION}${VERSION_EXT}
 TARGET_DIR=Horus-${VERSION}-${BUILD_TARGET}
 
 ##Which versions of external programs to use
@@ -141,7 +143,7 @@ if [ $BUILD_TARGET = "debian" ]; then
 		elif [ $EXTRA_ARGS = "-u" ]; then
 			# Upload to launchpad
 			debuild -S -sa
-			PPA=ppa:jesus-arroyo/horus
+			PPA=${PPA:="ppa:jesus-arroyo/horus"}
 			RELEASES="trusty utopic"
 			ORIG_RELEASE=`head -1 pkg/linux/debian/changelog | sed 's/.*) \(.*\);.*/\1/'`
 			for RELEASE in $RELEASES ;
